@@ -7,26 +7,21 @@
 
 import SwiftUI
 
-class User: ObservableObject{ // This is required when using Observed OBject
-    @Published var firstName = "Bosco" // Changing the view when the value  changes
-    @Published var lastName = "Choi" // Changing the view when the value  changes
-    
-    init(fn: String, ln: String){
-        self.firstName = fn
-        self.lastName = ln
+struct SecondView: View{ // This is a another view
+    var body: some View{
+        Text("Hello Welcome to this page! ")
     }
 }
-
 struct ContentView: View {
-    @ObservedObject private var user = User(fn: "Bosco", ln: "Choi") // Data Sharing
-    ç
+    @State private var showsheet = false
+    
     var body: some View {
-        VStack{
-            Text("Your Name is \(user.firstName), \(user.lastName)")
-            Section{
-                TextField("It Not What is your First Name", text:$user.firstName)
-                TextField("It Not What is your Last Name", text:$user.lastName)
-            }
+        Button("Show Sheet"){
+            // Show the sheet
+            self.showsheet.toggle()
+        }
+        .sheet(isPresented: $showsheet) {
+            SecondView()
         }
     }
 }

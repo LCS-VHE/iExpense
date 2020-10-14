@@ -7,22 +7,28 @@
 
 import SwiftUI
 
-struct SecondView: View{ // This is a another view
-    var body: some View{
-        Text("Hello Welcome to this page! ")
-    }
-}
 struct ContentView: View {
-    @State private var showsheet = false
+    @State private var numbers = [Int]()
+    @State private var currentnumber = 3
     
     var body: some View {
-        Button("Show Sheet"){
-            // Show the sheet
-            self.showsheet.toggle()
+        VStack{
+            List{
+                ForEach(numbers, id: \.self){ num in
+                    Text("\(num)")
+                }
+                .onDelete(perform: removeRows)
+            }
+            Button("Add Num"){
+                self.numbers.append(self.currentnumber)
+                self.currentnumber += 1
+            }
+            
         }
-        .sheet(isPresented: $showsheet) {
-            SecondView()
-        }
+    }
+    
+    func removeRows(at offsets: IndexSet){
+        numbers.remove(atOffsets: offsets)
     }
 }
 

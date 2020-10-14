@@ -12,18 +12,28 @@ struct ContentView: View {
     @State private var currentnumber = 3
     
     var body: some View {
-        VStack{
-            List{
-                ForEach(numbers, id: \.self){ num in
-                    Text("\(num)")
+        NavigationView{
+            VStack{
+                List{
+                    ForEach(numbers, id: \.self){ num in
+                        Text("\(num)")
+                    }
+                    .onDelete(perform: removeRows)
                 }
-                .onDelete(perform: removeRows)
+                HStack{
+                    Button("Add Num"){
+                        self.numbers.append(self.currentnumber)
+                        self.currentnumber += 1
+                    }
+                    Button("Remove Num"){
+                        if self.numbers.count > 0{
+                            self.numbers.remove(at: 0)
+                        }
+                    }
+                }
+                
             }
-            Button("Add Num"){
-                self.numbers.append(self.currentnumber)
-                self.currentnumber += 1
-            }
-            
+            .navigationBarTitle("Test")
         }
     }
     
